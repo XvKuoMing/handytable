@@ -1,3 +1,6 @@
+from .utils import string_to_python_value
+
+
 class Matrix:
 
   @staticmethod
@@ -140,16 +143,6 @@ class HandyTable(Matrix):
 
   ALPHABET = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ") # all possibles columns
 
-  avg = lambda arr: sum(arr)/len(arr) # принимает список значений и находит среднее
-  def product(arr):
-    """multiplies each element in the list"""
-    res = arr[0]
-    for e in arr[1:]:
-      res *= e
-    return res
-
-  FORMULA_MAPPER = {'SUM': sum, 'COUNT': len, 'AVG': avg, 'PRODUCT': product}
-
   #-------------------------------css code--------------------------------------
 
   # css code for table and table cells
@@ -191,7 +184,7 @@ class HandyTable(Matrix):
 
 
   def string_to_python_value(val: str):
-    """coverts string to appropriate value, it is used for js-python communication"""
+    """converts string to appropriate value, it is used for js-python communication"""
     # -----
     # future code for prohibiting html-injection
     # -----
@@ -295,7 +288,8 @@ class HandyTable(Matrix):
         col, row = id.split(':') # id is taken from generated html
         col = HandyTable.ALPHABET.index(col)
         row = int(row)
-        val = HandyTable.string_to_python_value(val)
+        # val = HandyTable.string_to_python_value(val)
+        val = string_to_python_value(val)
         self.parent[col, row] = val # assigning recieved value to parent matix
 
       HandyTable.REGISTRATE('selVal', set_val_sub)
@@ -349,7 +343,8 @@ class HandyTable(Matrix):
       col, row = id.split(':') # id is taken from generated html
       col = HandyTable.ALPHABET.index(col)
       row = int(row)
-      val = HandyTable.string_to_python_value(val)
+      # val = HandyTable.string_to_python_value(val)
+      val = string_to_python_value(val)
       self[col, row] = val
 
     HandyTable.REGISTRATE('setVal', set_val)
