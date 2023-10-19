@@ -166,6 +166,8 @@ class HandyTable(Matrix):
     REGISTRATE = output.register_callback
   else:
     raise ModuleNotFoundError('HandyTable is available only in google.colab')
+    # INVOKER = 'IPython.notebook.kernel.execute'
+    # REGISTRATE = 
 
   js = """
   <script>
