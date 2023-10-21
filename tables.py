@@ -1,4 +1,5 @@
 from .utils import string_to_python_value
+import warnings
 
 
 class Matrix:
@@ -160,26 +161,26 @@ class HandyTable(Matrix):
 
   # ------------------------------- js code-----------------------------------
   if 'google.colab' in sys.modules:
-    import google.colab
     from google.colab import output
     INVOKER = 'google.colab.kernel.invokeFunction'
     REGISTRATE = output.register_callback
-  else:
-    raise ModuleNotFoundError('HandyTable is available only in google.colab')
-    # INVOKER = 'IPython.notebook.kernel.execute'
-    # REGISTRATE = 
 
-  js = """
-  <script>
-  document.querySelectorAll("td[contenteditable]").forEach(function(element){js_listener_code})
-  </script>
-  """.format(js_listener_code="{" + """\n\t
-  element.addEventListener("input", function(e){js_function_code});
-  """.format(js_function_code="""{\n\t
-  const val = e.target.innerText;\n\t
-  const id = e.target.id;\n\t
-  """+ f"{INVOKER}" + """("setVal", [val, id], {});"""
-     + "}") + "}")
+    js = """
+    <script>
+    document.querySelectorAll("td[contenteditable].forEach(function(element){{
+      element.addEventListener("input", function(e){{
+        const val = e.target.innerText;
+        const id = e.target.id;
+        {invoker}("setVal", [val, id], {{}});
+      }});
+    }});
+    );
+    </script>
+    """
+  else:
+    warnings.warn("HandyTable js-feature is available only in google.colab for now")
+    js = ""
+     
 
   #------------------------------class util-------------------------------------
 
@@ -230,7 +231,10 @@ class HandyTable(Matrix):
     """
     columns_html = '<th>{col}</th>'
     index_html = '<td><strong>{index}</strong></td>'
-    cells_html = """<td class="TableCell", id="{id}" contenteditable>{cell_data}</td>"""
+    if bool(HandyTable.js):
+      cells_html = """<td class="TableCell", id="{id}" contenteditable>{cell_data}</td>"""
+    else:
+      cells_html = """<td class="TableCell", id="{id}">{cell_data}</td>"""
 
     cols = '<tr>' + '\n'.join([columns_html.format(col=col) for col in ['']+columns]) + '</tr>'
 
@@ -294,7 +298,8 @@ class HandyTable(Matrix):
         val = string_to_python_value(val)
         self.parent[col, row] = val # assigning recieved value to parent matix
 
-      HandyTable.REGISTRATE('selVal', set_val_sub)
+      if bool(HandyTable.js):
+        HandyTable.REGISTRATE('selVal', set_val_sub)
 
       html = HandyTable.as_html_table(self.columns, self.indexes, self.matrix)
       return HandyTable.css + html + HandyTable.js
@@ -349,7 +354,8 @@ class HandyTable(Matrix):
       val = string_to_python_value(val)
       self[col, row] = val
 
-    HandyTable.REGISTRATE('setVal', set_val)
+    if bool(HandyTable.js):
+      HandyTable.REGISTRATE('setVal', set_val)
 
     html = HandyTable.as_html_table(self.columns, self.indexes, self.matrix)
     return self.css + html + self.js
