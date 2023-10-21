@@ -170,16 +170,15 @@ class HandyTable(Matrix):
     INVOKER = 'google.colab.kernel.invokeFunction'
     REGISTRATE = output.register_callback
 
-    js = """
+    js = f"""
     <script>
-    document.querySelectorAll("td[contenteditable].forEach(function(element){{
+    document.querySelectorAll("td[contenteditable]").forEach(function(element){{
       element.addEventListener("input", function(e){{
         const val = e.target.innerText;
         const id = e.target.id;
-        {invoker}("setVal", [val, id], {{}});
+        {INVOKER}("setVal", [val, id], {{}});
       }});
     }});
-    );
     </script>
     """
   else:
