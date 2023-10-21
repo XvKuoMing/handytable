@@ -13,7 +13,6 @@ Use the following code instead:
   apt install subversion
 ```
 
-<br />
 ## download subdirectory using svn 
 
 ```
