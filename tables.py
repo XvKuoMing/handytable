@@ -172,8 +172,8 @@ class HandyTable(Matrix):
 
     js = f"""
     <script>
-    document.querySelectorAll("td[contenteditable]").forEach(function(element){{
-      element.addEventListener("input", function(e){{
+    document.querySelectorAll("td[contenteditable]").forEach(function (element) {{
+      element.addEventListener("input", function (e) {{
         const val = e.target.innerText;
         const id = e.target.id;
         {INVOKER}("setVal", [val, id], {{}});
@@ -293,7 +293,7 @@ class HandyTable(Matrix):
       return HandyTable.as_table(self.columns, self.indexes, self.matrix)
 
     def _repr_html_(self):
-      def set_val_sub(id:str, val:Any):
+      def set_val_sub(val:Any, id:str):
         """takes argument from js code, assign given value to self"""
         col, row = id.split(':') # id is taken from generated html
         col = HandyTable.ALPHABET.index(col)
@@ -303,7 +303,7 @@ class HandyTable(Matrix):
         self.parent[col, row] = val # assigning recieved value to parent matix
 
       if bool(HandyTable.js):
-        HandyTable.REGISTRATE('selVal', set_val_sub)
+        HandyTable.REGISTRATE('setVal', set_val_sub)
 
       html = HandyTable.as_html_table(self.columns, self.indexes, self.matrix)
       return HandyTable.css + html + HandyTable.js
@@ -354,7 +354,6 @@ class HandyTable(Matrix):
       col, row = id.split(':') # id is taken from generated html
       col = HandyTable.ALPHABET.index(col)
       row = int(row)
-      # val = HandyTable.string_to_python_value(val)
       val = string_to_python_value(val)
       self[col, row] = val
 
