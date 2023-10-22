@@ -1,12 +1,12 @@
 # handytable
 Package for excel-like table manipulations in Jupiter notebook &amp; google.colab
 
-Check docs.ipynb for usage
+Check docs.ipynb or [docs](https://colab.research.google.com/drive/1AXwdlPA02lMmxv6f-3rmCsI7zMNnKuZj?usp=sharing) for usage
 
 # Installation
 
 Currently handytable could not be downloaded using pip.
-Use the following code instead:
+Use the following steps instead:
 
 ## Install svn
 ```
@@ -19,8 +19,22 @@ Use the following code instead:
   svn export https://github.com/XvKuoMing/handytable/trunk/handytable
 ```
 
-## importing as python module
+## import as python module
 
 ```
+from handytable.tables impoort HandyTable
+```
+
+# Recomendation
+Due to difference in Jypiter notebook and Google colab API, the lead-js feature of HandyTable does not work in Jypiter. I will implement it soon.
+<br />
+For now I recommend to use handytable in google.colab.
+<br />
+Just use the copy and paste the following code:
+```
+%%capture
+
+!apt install subversion
+svn export https://github.com/XvKuoMing/handytable/trunk/handytable
 from handytable.tables impoort HandyTable
 ```
