@@ -30,7 +30,7 @@ Due to difference in Jypiter notebook and Google colab API, the lead-js feature 
 <br />
 For now I recommend to use handytable in google.colab.
 <br />
-Just use the copy and paste the following code:
+Just paste the following code:
 ```
 %%capture
 
