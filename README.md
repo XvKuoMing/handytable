@@ -35,6 +35,7 @@ Just use the copy and paste the following code:
 %%capture
 
 !apt install subversion
-svn export https://github.com/XvKuoMing/handytable/trunk/handytable
-from handytable.tables impoort HandyTable
+!svn export https://github.com/XvKuoMing/handytable/trunk/handytable
+
+from handytable.tables import HandyTable
 ```
