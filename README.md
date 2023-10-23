@@ -1,7 +1,7 @@
 # handytable
 Package for excel-like table manipulations in Jupiter notebook &amp; google.colab
 
-Check docs.ipynb or [docs](https://colab.research.google.com/drive/1AXwdlPA02lMmxv6f-3rmCsI7zMNnKuZj?usp=sharing) for usage
+Check docs.ipynb or [docs](https://colab.research.google.com/drive/1ssm8jMPkIN-1iZPETTP1sg7xSAkPEufP?usp=sharing) for usage
 
 # Installation
 
