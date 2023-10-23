@@ -245,7 +245,8 @@ class HandyTable(Matrix):
     rows = []
     for n, row in zip(indexes, matrix):
       index = index_html.format(index=n)
-      data = '\n'.join([cells_html.format(id=f'{columns[c]}:{n}', cell_data=data) for c, data in enumerate(row)])
+      data = '\n'.join([cells_html.format(id=f'{columns[c]}:{n}', cell_data=data) if data is not None else 
+                        cells_html.format(id=f'{columns[c]}:{n}', cell_data='') for c, data in enumerate(row)])
       rows.append('<tr>'+index+data+'</tr>')
     rows = '\n'.join(rows)
 
